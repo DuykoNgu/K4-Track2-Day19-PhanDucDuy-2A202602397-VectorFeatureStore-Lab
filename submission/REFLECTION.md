@@ -1,28 +1,13 @@
 # Reflection — Lab 19
 
-**Tên:** _<Họ Tên>_
-**Cohort:** _<A20-K4>_
-**Path đã chạy:** _<lite | docker | both>_
+**Tên:** Phan Đức Duy
 
----
+**Cohort:** A20-K4
 
-## Câu hỏi (≤ 200 chữ)
+**Path:** Lite
 
-> Trên golden set 50 queries, mode nào thắng ở loại query nào (`exact` /
-> `paraphrase` / `mixed`), và tại sao? Khi nào bạn **không** dùng hybrid
-> (i.e. khi nào pure BM25 hoặc pure vector là lựa chọn đúng)?
+Trên 50 truy vấn, hybrid đạt Precision@10 78,6%, cao hơn BM25 (77,8%) và vector (73,2%). Với `exact`, BM25 và hybrid cùng đạt 96,7%; với `mixed`, hybrid đạt 100%. Trên `paraphrase`, embedding Lite `bge-small-en` yếu với tiếng Việt: vector đạt 24%, BM25 33,3%, hybrid 32%. Vì vậy cần chọn embedding theo ngôn ngữ và đo trên dữ liệu thực.
 
-_Answer here._
+Không cần hybrid khi query chứa thuật ngữ chính xác và BM25 đã đủ tốt, hoặc khi một retriever đơn lẻ đạt chất lượng với chi phí và độ trễ thấp hơn. Với paraphrase tiếng Việt, nên thử embedding đa ngôn ngữ rồi đo lại.
 
----
-
-## Điều ngạc nhiên nhất khi làm lab này
-
-_(Optional, 1–2 câu)_
-
----
-
-## Bonus challenge
-
-- [ ] Đã làm bonus (xem `bonus/`)
-- [ ] Pair work với: _<tên đồng đội nếu có>_
+Điều bất ngờ nhất: post-filter chỉ đạt recall 0,00 khi filter còn 3,8% corpus, còn filtered-ANN giữ 1,00. Cache thiếu namespace cũng làm lộ câu trả lời giữa tenant.
